@@ -6,67 +6,40 @@ $(document).ready(function(){
       return parts.join(".");
   }
 
-      
-  const card = (id, name,total)=>{
-      return (
-        ` <div data-id="${id}" 
-            class="col-lg-3 col-md-6 col-sm-12 ministry-cards d-flex" 
-            style="cursor:pointer"
-          >
-              <div class="cont-1 d-flex flex-column justify-content-center">
-                <div class="img">
-                  <span class="circle"></span>
-                  <img src="/images/Vector 3.svg" alt="" class="vector" style="width:100%">
-                  <img src="/images/Vector 2.png" alt="" style="width:100%">
-                </div>
-                <div class="coat">
-                  <img src="images/image 7.png" alt="">
-                  <div class="text-center ministry">
-                    <h4>${name}</h4>
-                  </div>
-                </div>
-                <div class="texts d-flex flex-column text-center">
-                  <h4>Total amount Spent</h4>
-                  <p class="num">₦${insertCommas(total.toFixed(2))}</p>
-                  <p class="year">${new Date().getFullYear()}</p>
-                </div>
-              </div>
-            </div>`
-      )
-  } 
 
     $('#cards-container').on('click', '.ministry-cards', function(e){
+      console.log($(this))
       const id = $(this).attr("data-id")
-      $.ajax({
-              url: "/ministry/getUrl",
-              method: "GET",
-              data: {id},
-              success: function(data){
-                window.location=data.url;
-              }
-          })
+      const idjs = e.target.dataset.id;
+      console.log('id: ', id )
+      console.log('idjs: ', idjs)
+      console.log(e)
+      // $.ajax({
+      //         url: "/ministry/getUrl",
+      //         method: "GET",
+      //         data: {id},
+      //         success: function(data){
+      //           window.location=data.url;
+      //         },
+      //         error: function(error){
+      //           console.log(error)
+      //         }
+      //     })
     })
 
     const returnDefaults = e =>{
-    $.ajax({
-        url: "/ministry/all",
-        method: "GET",
-        success: function(data){
-          data = JSON.parse(data)
-          console.log('data', data)
-          let ministryCards = '';
-          if(data.length>0){    
-                data.forEach(ministry=>{
-                    const {shortname, name, total} = ministry;
-                    ministryCards += card(shortname, name, total);
-                })
-                
-                $('#cards-container').html(ministryCards);
-                $('#ministryList').fadeOut();
+      $.ajax({
+          url: "/ministries",
+          method: "GET",
+          success: function(data){      
+                  $('#cards-container').html(data);
+                  $('#ministryList').fadeOut();
+              },
+            error: function(error){
+              console.log(error)
             }
-        }
-    })
-  }
+      })
+    }
 
   $('#ministry_search').on('search', returnDefaults)
 
@@ -80,25 +53,26 @@ $(document).ready(function(){
             method: "POST",
             data: {query, _token},
             success: function(data){
-              // console.log(data)
-                data = JSON.parse(data)
+              console.log('typing...')
+              // $('#cards-container').html(data)
+                payload = data.split('?')
+                let lists = JSON.parse(payload[0])
+                $('#cards-container').html(payload[1])
                 let suggestions;
-                let ministryCards = '';
-                if(data.length>0){
+                if(lists.length>0){
                   suggestions = `<ul class="dropdown-menu" style="display:block; position:absolute">`;
-                    data.forEach(ministry=>{
-                        const {shortname, name, total} = ministry;
+                    lists.forEach(ministry=>{
+                        const {name} = ministry;
                         suggestions += `<li class="pb-2 px-3"><a href="#" class="text-muted "> ${name}</a></li>`
-                        ministryCards += card(shortname, name, total);
                     })
                       suggestions += '</ul>';
                       $('#ministryList').html(suggestions).fadeIn();
-                      $('#cards-container').html(ministryCards)
-                
                 }else{
                     $('#ministryList').fadeOut();
-                    $('#cards-container').empty();
                 }
+            },
+            error: function(error){
+              console.log(error)
             }
         })
     }else{
@@ -110,21 +84,19 @@ $(document).ready(function(){
   $('#search-area').on('click', 'li', function(e){
       e.preventDefault()
       let ministry = $(this).text();
-      console.log(ministry)
       $('#ministry_search').val(ministry);
       $('#ministryList').fadeOut();
       $.ajax({
-              url: "/ministry/details",
+              url: "/ministries",
               method: "GET",
               data: {ministry},
               success: function(data){
                 console.log(data)
-                  data = JSON.parse(data)
-                  console.log(data)
-                  const {shortname, name, total} = data[0]
-                  $('#cards-container').html(card(shortname, name, total))
+                $('#cards-container').html(data)
+              },
+              error: function(error){
+                console.log(error)
               }
-
           })
   })
 })

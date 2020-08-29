@@ -38,14 +38,32 @@ a:active{
 
 
 .section-wrapper{
-	margin-top: 5.5rem;
+	margin-top: .5rem;
 }
 
 
 /* breadcrumb */
 .breadcrumb{
-	padding-left: 0;
 	font-size: var(--fs-h6);
+}
+
+.first{
+	background-color: #f2f2f2;
+	font-weight: bold;
+	padding-left: 2%;
+}
+  
+.first li a{
+	color: #6c757d;
+}
+  
+.first li a:hover{
+	text-decoration: none;
+	color: #00945E !important;
+}
+  
+.first li.active{
+	color: #00945E;
 }
 
 .breadcrumb span{
@@ -71,6 +89,7 @@ a:active{
 .section-heading-title{
 	font-size: var(--fs-h2);
 	font-weight: bolder;
+	margin-top: 20px;
 }
 
 .section-heading-paragraph{
@@ -117,6 +136,12 @@ a:active{
 	margin: 0;
 }
 
+.table-top > h4 {
+	font-size: var(--fs-reg);
+	font-weight: var(--fw-bold);
+	margin: 0;
+}
+
 .ministry{
     color: var(--clr-accent);
 }
@@ -126,10 +151,15 @@ a:active{
 	background: var(--clr-accent);
 	color: var(--clr-light);
 	border-radius: 5px;
-	font-size: var(--fs-h5);
+	font-size: var(--fs-reg);
 	cursor: pointer;
 	border: none;
 	outline: none;
+}
+
+.table-top .nav-button{
+	font-size: var(--fs-reg);
+	padding: .5rem 1rem;
 }
 
 table a {
@@ -175,6 +205,9 @@ tr > :nth-child(1) {
 	margin-left: 2rem;
 }
 
+.main-table tr :nth-child(5) {
+	width: 130px;
+}
 .tbody1 tr td{
 	padding-bottom: 1.45rem;
 	color: var(--clr-accent);
@@ -224,6 +257,19 @@ tr:nth-child(even) {
 	width: 100%;
 }
 
+button.nav-chart{
+	font-size: var(--fs-h4) !important;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-radius: 0;
+	border-bottom: 1px solid var(--clr-accent);
+}
+
+.table-overflow{
+	text-align: center;
+}
+
 /* Pagination */
 .table-footer{
 	margin: 3rem .5rem;
@@ -255,7 +301,7 @@ tr:nth-child(even) {
 }
 
 .pagination1{
-	margin: 2rem .5rem 4rem;
+	margin: 2rem .5rem;
 }
 
 .pagination2{
@@ -341,7 +387,9 @@ tr:nth-child(even) {
 	color: inherit;
 }
 
-
+.btn-date{
+	padding: 6px;
+}
 
 /* scrollbar */
 
@@ -353,6 +401,7 @@ tr:nth-child(even) {
     background-color:rgba(0,148,94,0.62);
     -webkit-box-shadow: inset 0 0 6px rgba(90,90,90,0.7);
 }
+
 #myTable::-webkit-scrollbar {
     width: 12px;
 }
@@ -423,22 +472,6 @@ tr:nth-child(even) {
 		color: var(--clr-accent);
 		margin-right: 2rem;
 	}
-		
-	/* .row-ministry{
-		width: 15%;
-	}
-	.row-project{
-		width: 20%;
-	}
-	.row-company{
-		width: 13%;
-	}
-	.row-amount{
-		width: 15%;
-	}
-	.row-date{
-		width: 15%;
-	} */
 }
 
 
@@ -505,6 +538,21 @@ tr:nth-child(even) {
 		color: var(--clr-accent);
 		margin-right: 2rem;
 	}
+	
+	.pagination a{
+
+        display: none;
+    }
+
+    .pagination a:first-child,
+    .pagination a:nth-child( 2 ),
+    .pagination a:nth-last-child( 2 ),
+    .pagination a:last-child,
+    .pagination a.active,
+    .pagination a.disabled {
+
+        display: block;
+    }
 } 
 
 

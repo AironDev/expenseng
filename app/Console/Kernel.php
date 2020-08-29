@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\ConnectToStreamingAPI::class,
+        Commands\ParseSheet::class,
     ];
 
     /**
@@ -24,7 +26,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('SendTweet')->monthly();
+         $schedule->command('budgetTweet')->weekly()->mondays()->at('13:00');
+         $schedule->command('ReportLogging')->daily();
+         $schedule->command('parse:daily')->everyMinute();
+         $schedule->command('parse:sheet')->everyMinute();
+         $schedule->command('queue:work --once')->hourly();
     }
 
     /**

@@ -1,44 +1,25 @@
 @extends('layouts.master')
 @push('css')
-<link rel="stylesheet" href="{{ asset('css/aboutus-header_footer.css') }}">
 <link rel="stylesheet" href="{{ asset('css/contracts_awarded.css') }}">
 <link rel="stylesheet" href="{{ asset('css/director_board.css') }}">
+<link rel="stylesheet" href="{{asset('css/breadcrumb.css') }}">
 
 <title>FG Expense - Contracts</title>
 @endpush
 
 @section('content')
 <!-- Main body start -->
+<div class="container">
+    {{ Breadcrumbs::render('contractor', $company) }}
+</div>
 <section id="main">
 
   <!-- Start here -->
   <!-- Section 1 -->
   <div class="section-1 container">
-    <div class="navigation-links">
-      <ul>
-        <li>
-          <a href="{{ route('home') }}">HOME</a>
-        </li>
-        <li>
-          <span>&#8226;</span>
-        </li>
-        <li>
-          <a href="{{ route('contractors') }}">CONTRACTORS</a>
-        </li>
-        <li>
-          <span>&#8226;</span>
-        </li>
-        <li>
-          <a>
-          {{ $company->name }}
-          </a>
-        </li>
-      </ul>
-    </div>
-
     <div class="user-profile">
       <h3 class="name brand-name">
-        {{ $company->name }} 
+        {{ $company->name }}
         <img src="{{ asset('images/image 13.png') }}" alt="Berger logo">
       </h3>
       <div class="profile-overview mt-3">
@@ -450,5 +431,5 @@
 @endsection
 
 @section('js')
-{{-- <script src="assets/js/main.js" type="text/javascript"></script> --}}
+<script src="{{ asset('js/index.js') }}"></script>
 @endsection
